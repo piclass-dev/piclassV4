@@ -1,0 +1,144 @@
+.message-list{
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #fafafa;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, .1);
+}
+
+.message-content{
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    display: block;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+}
+.list-element{
+    padding-top:15px;
+}
+
+.list-element:hover{
+    background-color: #dadada
+}
+
+.element-title{
+    margin: 5px 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.element-sender{
+    font-size: 15px;
+    color: #939393;
+    margin: 0 20px;
+}
+
+.element-senddate{
+    margin-right:5px;
+    font-size: 15px;
+    color: #939393;
+    float: right;   
+}
+
+.line{
+    margin-top: 20px;
+    height: 1px;
+    border-top: 1px solid #dadada;
+    text-align: center;
+}
+
+
+#unread{
+    margin-top: -15px;
+    margin-right: 10px;
+    float: left;
+    width: 15px;
+    height: 93px;
+    background: #939393
+}
+
+.searchbox{
+    padding: 15px;
+}
+
+.dialog-button{
+    float: right;
+}
+.button-huge{
+    display: block;
+    width: 100%;
+    padding: 20px;
+    border-radius: 0;
+    border:0;
+    height: 50px;
+    background: #ff6f62;
+}
+.content-block{
+    margin: 20px;
+}
+
+.content-title{
+    font-size: 30px;
+}
+
+.content-sender{
+    font-size: 17px;
+    margin-left: 65px;
+}
+
+.content-avatar{
+    float: left;
+}
+
+.content-senddate{
+    font-size: 13px;
+    margin: -5px 65px;
+    color: #939393;
+}
+
+.content-text{
+    margin-top: 40px;
+    tableData6: []
+}
+.el-form-item .el-form-item__content .el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .el-tabs__active-bar{
+    background: #ff6f62;
+}
+.el-form-item .el-form-item__content .el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .is-active{
+    color: #ff6f62; 
+}
+.message-list .el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .is-active{
+    color: #ff6f62;
+}
+.message-list .el-tabs .el-tabs__header .el-tabs__nav-wrap .el-tabs__nav-scroll .el-tabs__nav .el-tabs__active-bar{
+    background: #ff6f62;
+}
+ .cell .el-checkbox .el-checkbox__input .el-checkbox__inner{
+    background: #ff6f62;
+    border: 0;
+}
+.el-tab-pane .el-checkbox-group .el-checkbox .el-checkbox__input  .el-checkbox__inner{
+    background: #ff6f62;
+    border: 0;
+}
+.el-tab-pane .el-input >input:focus{
+   border :#ff6f62 1px solid;
+}
+.el-form-item__content .el-input >input:focus{
+    border :#ff6f62 1px solid;
+}
+.message-list .searchbox .el-input>input:focus{
+    border :#ff6f62 1px solid;
+}

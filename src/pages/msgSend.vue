@@ -5,25 +5,26 @@
   <el-col :span="18" :offset="6" class="message-content">
     <div class="content-block">
 
-      <el-form :model="form">
-        <div class="dialog-button">
+      <el-form >
+        <div align="right">
             <el-button>取 消</el-button>
-            <el-button type="primary" style="background:#ff6f62;border:0;">发 送</el-button>
+            <el-button type="primary" style="background:#ff6f62;border:0;" v-on:click="send" >发 送</el-button>
         </div>
 
       <el-form-item label="标题">
-        <el-input v-model="form.name" auto-complete="off" placeholder="请输入标题"></el-input>
+        <el-input v-model="title" auto-complete="off" placeholder="请输入标题"></el-input>
       </el-form-item>
 
       <el-form-item label="">
       <p style="margin:0;">正文</p>
           
       </el-form-item>
-      <ue></ue>
-
+       <div class="editor-container">
+        <UE :defaultMsg=defaultMsg :config=config ref="ue"></UE>
+      </div>
   
       <el-form-item label="收件人" >    
-        <el-tabs v-model="activeName2" class="a">
+        <el-tabs  class="a" activeName="first">
           <el-tab-pane label="班级" name="first">
             <el-table
               ref="multipleTable"
@@ -90,12 +91,15 @@
                     </el-checkbox-group>-->
                 <!--</el-tab-pane>-->
         <el-tab-pane label="其他" name="fourth">
-            <el-input
-            placeholder="请输入收件人用户名"
-            icon="search"
-            v-model="search2"
-           >
-          </el-input>
+          <el-row>
+            <el-col :span="5">
+              <el-input placeholder="请输入收件人用户名" icon="search" v-model="search"> </el-input>
+            </el-col>
+            <el-col :span="2">
+              <el-button type="primary" style="background:#ff6f62;border:0;" v-on:click="addReceiver" >添加</el-button>
+            </el-col>
+          </el-row>
+          <el-tag v-for="receiver in otherReceiver" :key="receiver.username" :closable="true" type="primary" @close="delReceiver(receiver)"> {{receiver.name}}</el-tag>
         </el-tab-pane>
         </el-tabs>    
     </el-form-item> 
@@ -107,30 +111,27 @@
 <script>
 import topBar from '../components/topBar.vue'
 import leftBlock from '../components/leftBlock.vue'
-  import ue from '../components/UE'
+import UE from '../components/UE'
   export default {
     components: {
-      ue: ue,
+      UE: UE,
       topBar:topBar,
       leftBlock:leftBlock
     },
     data () {
       return {
-       
-        form: {
-          name: '',
-          receiver: '',
-          text: ''
-
+        defaultMsg: '这里是UE测试',
+        config: {
+          initialFrameWidth: null,
+          initialFrameHeight: 350
         },
-        formLabelWidth: '100px',
-        activeName1: 'inbox',
-        activeName2: 'first',
+        title:"",      
         receiverClass:[],
         receiverAdmin:[],
         receiverSystem:[],
-        checkList: [],
-        search2: ''
+        otherReceiver:[],
+      
+        search: ''
       }
     },
     methods: {
@@ -144,13 +145,27 @@ import leftBlock from '../components/leftBlock.vue'
         
         })
       },
-      search(){
+      send(){
+        console.log(this.receiverClass)
+        alert(this.$refs.ue.getUEContent())
+      },
+      addReceiver(){
         this.$ajax.get('/userinfo?username=' + this.search
         ).then(data => {
-          this.userinfo = data.data
+          data = data.data
           console.log(data)
-        })
+          if(data.code==1) { 
+            this.otherReceiver.push({id: data.username, name: data.name })
+            this.$message({message : '添加成功'+data.name, type : 'success'})  
 
+          }
+          else if(data.code==2) this.$message({message : '该用户没有绑定微信！', type : 'error'})  
+          else this.$message({message : '该用户没有绑定微信！', type : 'error'})  
+        })
+        
+      },
+      delReceiver(tag){
+        this.otherReceiver.splice(this.otherReceiver.indexOf(tag), 1);
       }
       
     },

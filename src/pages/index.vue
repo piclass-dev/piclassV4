@@ -24,6 +24,8 @@ export default {
     return {  
       token: "iFI2Z1xpcVutQsjtYVBifzIFoLI+iRJbPPCExCHNUClrnlMmRF9X5hcnFrIesRBl9kkcW32wD6l4ln5mk0Z7bcGwGU31iSGh1BzU7ulrc1k=",
       url : "/message/send"
+      // token:"",
+      // url:""
     }
   },
   methods:{
@@ -31,8 +33,19 @@ export default {
       
       sessionStorage.setItem("token",this.token);
       this.$router.push(this.url)
-    }
+    },
+
+
+    
+  },
+  mounted(){
+    // this.token=this.$route.query.token
+    // this.url=this.$route.query.url
+    // sessionStorage.setItem("token",this.token)
+    // this.$router.push(this.url)
   }
+  
+  
  
 }
 

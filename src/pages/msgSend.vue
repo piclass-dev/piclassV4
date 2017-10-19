@@ -1,7 +1,7 @@
 <template>
 <div id="app">
   <topBar></topBar>
-  <leftBlock></leftBlock>
+  <leftBlock ref="leftBlock"></leftBlock>
   <el-col :span="18" :offset="6" class="message-content">
     <div class="content-block">
 
@@ -36,14 +36,19 @@
               max-height="500"
               >
               <el-table-column
-                type="selection"
-                width="55">
+               label="课程编号"
+                width="150"
+              >
+                <template scope="scope">
+                  <el-checkbox :label="scope.row.class_id"  v-model="checkboxClass" ></el-checkbox>
+                </template>
+                
               </el-table-column>
-              <el-table-column
+              <!--<el-table-column
                 prop="class_id"
                 label="课程编号"
                 width="100">
-              </el-table-column>
+              </el-table-column>-->
               <el-table-column
                 prop="class_name"
                 label="课程名称"
@@ -72,7 +77,11 @@
             >
             <el-table-column
               type="selection"
-              width="55">
+              width="150">
+              <template scope="scope">
+                  <el-checkbox :label="scope.row.username"  v-model="checkboxAdmin" ></el-checkbox>
+              </template>
+
             </el-table-column>
             <el-table-column
             prop="name"
@@ -99,7 +108,7 @@
               <el-button type="primary" style="background:#ff6f62;border:0;" v-on:click="addReceiver" >添加</el-button>
             </el-col>
           </el-row>
-          <el-tag v-for="receiver in otherReceiver" :key="receiver.username" :closable="true" type="primary" @close="delReceiver(receiver)"> {{receiver.name}}</el-tag>
+          <el-tag v-for="receiver in checkboxOther" :key="receiver.username" :closable="true" type="primary" @close="delReceiver(receiver)"> {{receiver.name}}</el-tag>
         </el-tab-pane>
         </el-tabs>    
     </el-form-item> 
@@ -120,7 +129,7 @@ import UE from '../components/UE'
     },
     data () {
       return {
-        defaultMsg: '这里是UE测试',
+        defaultMsg: '',
         config: {
           initialFrameWidth: null,
           initialFrameHeight: 350
@@ -130,13 +139,17 @@ import UE from '../components/UE'
         receiverAdmin:[],
         receiverSystem:[],
         otherReceiver:[],
+        
+        checkboxClass:[],
+        checkboxAdmin:[],
+        checkboxOther:[],
       
         search: ''
       }
     },
     methods: {
       init () {
-        this.$ajax.get('/receiver',{ params: { 'token': sessionStorage.getItem('token') }}
+        this.$ajax.get('/message/receiver',{ params: { 'token': sessionStorage.getItem('token') }}
         ).then(data => {
           data = data.data
           this.receiverAdmin=data.receiverAdmin
@@ -145,17 +158,44 @@ import UE from '../components/UE'
         
         })
       },
+      
       send(){
-        console.log(this.receiverClass)
-        alert(this.$refs.ue.getUEContent())
+     
+        var tmp=[]
+        for(let item of this.checkboxOther){
+          tmp.push(item.id)
+        }
+        
+        this.$ajax.post('/message/send',
+          { 
+           
+              'token': sessionStorage.getItem('token') ,
+              'checkboxClass':this.checkboxClass.join(","),
+              'checkboxAdmin':this.checkboxAdmin.join(","),
+              'checkboxOther':tmp.join(","),
+              'title':this.title,
+              'content':this.$refs.ue.getUEContent()
+            
+          }
+
+
+        ).then(data => {
+          data = data.data
+          this.$message({message: data.msg, type : 'success'})  
+          
+        })
+        this.$refs.leftBlock.init()
+
+
+        
       },
       addReceiver(){
-        this.$ajax.get('/userinfo?username=' + this.search
+        this.$ajax.get('/message/userinfo?username=' + this.search
         ).then(data => {
           data = data.data
           console.log(data)
           if(data.code==1) { 
-            this.otherReceiver.push({id: data.username, name: data.name })
+            this.checkboxOther.push({id: data.username, name: data.name })
             this.$message({message : '添加成功'+data.name, type : 'success'})  
 
           }
@@ -165,7 +205,7 @@ import UE from '../components/UE'
         
       },
       delReceiver(tag){
-        this.otherReceiver.splice(this.otherReceiver.indexOf(tag), 1);
+        this.checkboxOther.splice(this.checkboxOther.indexOf(tag), 1);
       }
       
     },

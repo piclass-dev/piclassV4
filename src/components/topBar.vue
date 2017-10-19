@@ -1,17 +1,17 @@
 <template>
     <div class="app">
         <div class="header">
-            <el-menu  theme="dark" style="background:#424147;" class="el-menu-demo" mode="horizontal" >
+            <el-menu  theme="dark" style="background:#424147;" class="el-menu-demo" mode="horizontal" @select="handleOpen"  >
                 <div class="header-logo">
                     <img src="../assets/logo.png" height="25">            
                 </div>
                 <div class="header-option">
-                    <el-menu-item index="1">主页</el-menu-item>
-                    <el-menu-item index="2">总览</el-menu-item>
+                    <el-menu-item index="http://piclass.cn" >主页</el-menu-item>
+                    <!--<el-menu-item index="/123">总览</el-menu-item>
                     <el-menu-item index="3">作业</el-menu-item>
                     <el-menu-item index="4">点名</el-menu-item>
                     <el-menu-item index="5">文件</el-menu-item>
-                    <el-menu-item index="6">留言</el-menu-item>
+                    <el-menu-item index="6">留言</el-menu-item>-->
                 </div>
                 <div class="header-avatar">
                     <el-dropdown>
@@ -54,11 +54,16 @@
 <script>
 export default {
     data () {
-    return {
-        activeIndex: '6'
-    }
+        return {
+            activeIndex: '6'
+        }
     },
-    
+    methods:{
+        handleOpen(key,keyPath){
+            window.location.href=key
+        }
     }
+    
+}
 
 </script>

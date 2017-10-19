@@ -5,6 +5,10 @@ import msgSend from '@/pages/msgSend'
 import index2 from '@/pages/index'
 import msgDetail from '@/pages/msgDetail'
 import UE from '@/components/UE'
+import msgMBIndex from '@/pages/mobile/msgIndex'
+import msgMBDetail from '@/pages/mobile/msgDetail'
+import msgMBSend from '@/pages/mobile/msgSend'
+import fileMB from '@/pages/mobile/file'
 Vue.use(Router)
 
 export default new Router({
@@ -29,6 +33,26 @@ export default new Router({
             path: '/message/ue',
             name: 'UE',
             component: UE
+        },
+        {
+            path: '/mobile/message/index',
+            name: 'msgIndex',
+            component: msgMBIndex
+        },
+        {
+            path: '/mobile/message/detail',
+            name: 'msgMBDetail',
+            component: msgMBDetail
+        },
+        {
+            path: '/mobile/message/send',
+            name: 'msgMBSend',
+            component: msgMBSend
+        },
+        {
+            path: '/mobile/file',
+            name: 'fileMB',
+            component: fileMB
         }
     ]
 })

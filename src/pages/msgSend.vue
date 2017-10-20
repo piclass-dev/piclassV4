@@ -182,6 +182,8 @@ import UE from '../components/UE'
         ).then(data => {
           data = data.data
           this.$message({message: data.msg, type : 'success'})  
+          this.title=""
+          this.content=""
           
         })
         this.$refs.leftBlock.init()
@@ -193,7 +195,6 @@ import UE from '../components/UE'
         this.$ajax.get('/message/userinfo?username=' + this.search
         ).then(data => {
           data = data.data
-          console.log(data)
           if(data.code==1) { 
             this.checkboxOther.push({id: data.username, name: data.name })
             this.$message({message : '添加成功'+data.name, type : 'success'})  

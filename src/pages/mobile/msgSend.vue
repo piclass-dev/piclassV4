@@ -22,7 +22,7 @@
 
       
       <el-form-item label="正文">
-        <el-input v-model="content" auto-complete="off" placeholder="请输入正文" type="textarea" :rows="5" ></el-input>
+        <el-input v-model="content" auto-complete="off" placeholder="请输入正文" type="textarea" :rows="10" ></el-input>
       </el-form-item>
   
       <el-form-item label="收件人" >    
@@ -177,7 +177,10 @@
 
         ).then(data => {
           data = data.data
-          this.$message({message: data.msg, type : 'success'})  
+          this.$message({message: data.msg, type : 'success'})
+          this.title=""
+          this.content=""
+          
           
         })
 
@@ -206,6 +209,8 @@
     },
     mounted(){
       this.init()
+      console.log(encodeURI(sessionStorage.getItem('token')))
+      console.log(sessionStorage.getItem('token'))
     }
     
    

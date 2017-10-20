@@ -23,7 +23,7 @@
         type: String
       },
       config: {
-        type: Object
+        type: Object,
       }
     },
     mounted() {
